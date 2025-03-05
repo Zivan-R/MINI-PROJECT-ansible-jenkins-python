@@ -1,0 +1,8 @@
+[VM1]
+control ansible_host=localhost ansible_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[VM2]
+app ansible_host=10.0.0.5 ansible_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3

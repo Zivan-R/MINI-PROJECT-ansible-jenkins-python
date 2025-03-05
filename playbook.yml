@@ -1,0 +1,145 @@
+---
+
+- name: Setup VM1 Jenkins Git
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Update and upgrade
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+
+
+    - name: Install Git
+      ansible.builtin.apt:
+        name: git
+        state: present
+
+
+    - name: Install OpenJDK 17
+      ansible.builtin.apt:
+        name: openjdk-17-jdk
+        state: present
+
+
+    - name: Add Jenkins repository key
+      ansible.builtin.apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        state: present
+
+
+    - name: Add Jenkins repositoty
+      ansible.builtin.apt_repository:
+        repo: deb https://pkg.jenkins.io/debian-stable binary/
+        state: present
+
+
+    - name: Install Jenkins
+      ansible.builtin.apt:
+        name: jenkins
+        state: present
+
+
+    - name: Start and enable Jenkins
+      ansible.builtin.systemd:
+        name: jenkins
+        state: started
+        enabled: true
+
+
+- name: Setup VM2 MySQL Docker Python app environment
+  hosts: VM2
+  become: true
+  tasks:
+    - name: Update et Upgrade
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+
+
+    - name: Install MySQL server
+      ansible.builtin.apt:
+        name: mysql-server
+        state: present
+
+
+    - name: Start and enable MySQL service
+      ansible.builtin.systemd:
+        name: mysql
+        state: started
+        enabled: true
+
+
+    - name: Install Python MySQL bindings (PyMySQL)
+      ansible.builtin.apt:
+        name: python3-pymysql
+        state: present
+
+
+    - name: Configure MySQL root user to use auth_socket
+      community.mysql.mysql_user:
+        name: root
+        host: localhost
+        plugin: auth_socket
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+
+    - name: Copy database schema to VM2
+      ansible.builtin.copy:
+        src: roles/vm2_setup/files/basedata.sql
+        dest: /tmp/basedata.sql
+        owner: root
+        group: root
+        mode: '0644'
+
+
+    - name: Import database schema using passwordless root via socket
+      ansible.builtin.shell: mysql < /tmp/basedata.sql
+      args:
+        executable: /bin/bash
+      changed_when: false
+
+
+    - name: Install Docker
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+
+
+    - name: Start and enable docker
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+        enabled: true
+
+
+    - name: Install Python3 and pip
+      ansible.builtin.apt:
+        name:
+          - python3
+          - python3-pip
+        state: present
+
+
+    - name: Install system dependencies for Python SSL support
+      ansible.builtin.apt:
+        name:
+          - libssl-dev
+          - libffi-dev
+          - python3-openssl
+          - python3-full
+        state: present
+        update_cache: yes
+
+
+    - name: Install PyMySQL
+      ansible.builtin.apt:
+        name: python3-pymysql
+        state: present
+
+
+    - name: Install pytest for testing
+      ansible.builtin.apt:
+        name: python3-pytest
+        state: present
