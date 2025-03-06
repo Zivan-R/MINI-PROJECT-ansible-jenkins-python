@@ -2,7 +2,7 @@
 
 ## NOTE:
 
-*Le projet en question, avec les fichiers Jenkinsfile, Dockerfile, test, app et requirements sont accessibles* **[ICI](https://github.com/Zivan-R/ansible-deploy-f2-f4.git)**
+*Le projet en question, avec les fichiers Jenkinsfile, Dockerfile, test, app et requirements, est accessible* **[ICI](https://github.com/Zivan-R/ansible-deploy-f2-f4.git)**
 
 ---
 ## PROCESS:
