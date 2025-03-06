@@ -20,6 +20,7 @@
       ansible.builtin.apt:
         name: openjdk-17-jdk
         state: present
+        update_cache: true
 
 
     - name: Add Jenkins repository key
@@ -55,6 +56,22 @@
       ansible.builtin.apt:
         update_cache: true
         upgrade: dist
+
+
+    - name: Install Java for jenkins agent
+      ansible.builtin.apt:
+        name: openjdk-17-jdk
+        state: present
+        update_cache: true
+
+
+    - name: Create Jenkins agent dir
+      ansible.builtin.file:
+        path: /home/jenkins
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
 
 
     - name: Install MySQL server
@@ -131,12 +148,6 @@
           - python3-full
         state: present
         update_cache: true
-
-
-    - name: Install PyMySQL
-      ansible.builtin.apt:
-        name: python3-pymysql
-        state: present
 
 
     - name: Install pytest for testing
