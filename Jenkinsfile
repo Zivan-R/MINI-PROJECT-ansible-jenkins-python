@@ -1,7 +1,7 @@
 pipeline {
     agent any
     
-    stage {
+    stages {
 	stage('Clone Repository') {
 	    steps {
 		git 'https://github.com/Zivan-R/ansible-deploy-f2-f4'
@@ -26,7 +26,7 @@ pipeline {
 	    steps {
 		withCredentials([string(credentialsId: 'dockerhub_password', variable: 'bF*2JT3?gfWryaL')]) {
 	    	    sh 'echo $DOCKERHUB_PASS | docker login -u zivanr --password-stdin'
-		    sh 'docker push zivanr/python-app-f2-f4:lastest'
+		    sh 'docker push zivanr/python-app-f2-f4:latest'
 	        }
 	    }
 	}

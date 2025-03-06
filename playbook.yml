@@ -130,7 +130,7 @@
           - python3-openssl
           - python3-full
         state: present
-        update_cache: yes
+        update_cache: true
 
 
     - name: Install PyMySQL
