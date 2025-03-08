@@ -5,6 +5,9 @@
 *Le projet en question, avec les fichiers Jenkinsfile, Dockerfile, test, app et requirements, est accessible* **[ICI](https://github.com/Zivan-R/ansible-deploy-f2-f4.git)**
 
 ---
+## Technos:  
+Microsoft Azure, Ansible, Git, GitHub, Jenkins, Docker, MySQL, Python, Pytest  
+  
 ## PROCESS:
 **1-** Création de deux VM (VM1 et VM2) sur Microsoft Azure et Installation de Ansible sur VM1  
 **2-** Configuration des VM pour accès mutuel en SSH Passwordless  
