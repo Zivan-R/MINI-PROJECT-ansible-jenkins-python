@@ -6,7 +6,7 @@
 
 ---
 ## PROCESS:
-**1-** Création de deux VM sur Microsoft Azure et Installation de Ansible sur VM1  
+**1-** Création de deux VM (VM1 et VM2) sur Microsoft Azure et Installation de Ansible sur VM1  
 **2-** Configuration des VM pour accès mutuel en SSH Passwordless  
 **3-** Structuration de l’arborescence du projet selon les bonnes pratiques Ansible  
 **4-** Écriture du fichier .sql pour la création et configuration de la base de données  
